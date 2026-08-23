@@ -1,0 +1,400 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>SR's EV Charging System</title>
+    <link rel="stylesheet" href="{{ url_for('static', filename='style.css') }}">
+    <link href="https://fonts.googleapis.com/css2?family=Outfit:wght@300;400;600;800&display=swap" rel="stylesheet">
+</head>
+<body>
+    <!-- Landing Page -->
+    <div id="landing-page" class="view active">
+        <div class="glass-panel text-center">
+            <h1>⚡ SR's EV Network</h1>
+            <p class="subtitle mb-2">Select your portal</p>
+            <div class="role-buttons">
+                <button id="btn-user-mode" class="primary-btn glow-effect">User Mode</button>
+                <button id="btn-admin-mode" class="secondary-btn">
+    Admin Portal
+</button>
+            </div>
+        </div>
+    </div>
+<!-- Admin Portal -->
+<div id="admin-portal" class="view">
+
+    <button class="back-btn" onclick="goHome()">← Back</button>
+
+    <!-- Admin Login -->
+    <div id="admin-login-screen" class="sub-view active">
+
+        <div class="glass-panel text-center admin-login-panel">
+
+            <h1>Admin Login</h1>
+
+            <p class="subtitle">
+                Login to your station management portal
+            </p>
+
+            <div class="login-form">
+
+                <input
+                    type="text"
+                    id="admin-username"
+                    placeholder="Username"
+                    autocomplete="off"
+                >
+
+                <input
+                    type="password"
+                    id="admin-password"
+                    placeholder="Password"
+                >
+
+                <button
+                    id="admin-login-btn"
+                    class="primary-btn glow-effect"
+                >
+                    Login
+                </button>
+
+                <p id="login-message"></p>
+
+            </div>
+
+            
+
+
+        </div>
+
+    </div>
+
+
+    <!-- Station Admin Dashboard -->
+    <div id="station-admin-dashboard" class="sub-view">
+
+        <div class="simulator-container">
+
+            <header>
+
+                <h1 id="admin-station-name">
+                    Station Dashboard
+                </h1>
+
+                <p
+                    class="subtitle"
+                    id="admin-station-address"
+                >
+                    Loading station...
+                </p>
+
+            </header>
+
+
+            <div class="admin-grid">
+
+                <!-- Revenue -->
+
+                <div class="glass-panel stat-card">
+
+                    <h3>Total Revenue</h3>
+
+                    <div class="admin-value cost-value">
+                        ₹<span id="station-admin-revenue">
+                            0.00
+                        </span>
+                    </div>
+
+                </div>
+
+
+                <!-- Energy -->
+
+                <div class="glass-panel stat-card">
+
+                    <h3>Energy Delivered</h3>
+
+                    <div class="admin-value">
+
+                        <span id="station-admin-energy">
+                            0.00
+                        </span>
+
+                        kWh
+
+                    </div>
+
+                </div>
+
+
+                <!-- Active Sessions -->
+
+                <div class="glass-panel stat-card">
+
+                    <h3>Active Sessions</h3>
+
+                    <div class="admin-value">
+
+                        <span id="station-admin-active">
+                            0
+                        </span>
+
+                    </div>
+
+                </div>
+
+
+                <!-- Status -->
+
+                <div class="glass-panel stat-card">
+
+                    <h3>Station Status</h3>
+
+                    <div class="status-indicator">
+
+                        <div
+                            class="status-dot glowing"
+                            id="admin-status-dot"
+                        ></div>
+
+                        <span id="station-admin-status">
+                            Online
+                        </span>
+
+                    </div>
+
+                </div>
+
+            </div>
+
+
+            <!-- Station Information -->
+
+            <div class="glass-panel mt-2">
+
+                <h2>Station Information</h2>
+
+                <div class="stat-grid">
+
+                    <div class="stat-box">
+
+                        <span class="label">
+                            Charging Type
+                        </span>
+
+                        <span
+                            class="value"
+                            id="admin-charging-type"
+                        >
+                            --
+                        </span>
+
+                    </div>
+
+
+                    <div class="stat-box">
+
+                        <span class="label">
+                            Price
+                        </span>
+
+                        <span class="value">
+
+                            ₹<span id="admin-price">
+                                0
+                            </span>/kWh
+
+                        </span>
+
+                    </div>
+
+                </div>
+
+            </div>
+
+
+            <!-- Live Sessions -->
+
+            <div class="glass-panel mt-2">
+
+                <h2>Live Charging Sessions</h2>
+
+                <div
+                    class="session-list"
+                    id="station-session-list"
+                >
+                    <div class="session-item">
+                        No active charging sessions
+                    </div>
+                </div>
+
+            </div>
+
+
+            <button
+                id="admin-logout-btn"
+                class="secondary-btn"
+            >
+                Logout
+            </button>
+
+        </div>
+
+    </div>
+
+</div>
+    <!-- User Portal -->
+    <div id="user-portal" class="view">
+        <button class="back-btn" onclick="goHome()">← Back</button>
+        
+        <!-- Booking / QR Screen -->
+        <div id="booking-screen" class="sub-view active">
+            <div class="glass-panel text-center booking-panel">
+                <h2>Select & Unlock Station</h2>
+                
+                <div class="user-info-section mb-2">
+                    <input type="text" id="userNameInput" placeholder="Enter your full name" class="user-input" autocomplete="off" style="width: 80%; padding: 10px; border-radius: 8px; border: 1px solid var(--primary-neon); background: rgba(0,0,0,0.5); color: white; text-align: center; font-size: 1.1rem; margin-bottom: 10px;">
+                    
+                    <div style="margin-top: 10px; display: flex; flex-direction: column; align-items: center; gap: 10px; font-size: 1rem;">
+                        <div style="display: flex; gap: 20px;">
+                            <label style="cursor: pointer; display: flex; align-items: center; gap: 5px;">
+                                <input type="radio" name="payMode" value="prepay" checked style="accent-color: var(--primary-neon);" onchange="togglePayMode()"> Pay Upfront
+                            </label>
+                            <label style="cursor: pointer; display: flex; align-items: center; gap: 5px;">
+                                <input type="radio" name="payMode" value="postpay" style="accent-color: var(--primary-neon);" onchange="togglePayMode()"> Pay After Charging
+                            </label>
+                        </div>
+                        <div id="prepayAmountDiv">
+                            <input type="number" id="prepayAmount" placeholder="Amount (e.g. 200)" class="user-input" style="width: 200px; padding: 5px; border-radius: 5px; border: 1px solid var(--primary-neon); background: rgba(0,0,0,0.5); color: white; text-align: center;">
+                        </div>
+                    </div>
+                </div>
+                
+                <div class="available-stations">
+                    <h3>Nearby Stations</h3>
+                    <div class="station-list" id="userStationList">
+                        <!-- Populated by JS -->
+                    </div>
+                </div>
+
+                <div class="qr-container" style="display: none;" id="qrContainer">
+                    <div class="qr-frame">
+                        <div class="qr-code"></div>
+                        <div class="laser-scanner"></div>
+                    </div>
+                </div>
+                
+                <p class="instruction-text" id="instructionText">Select an available station to proceed</p>
+                <button id="btn-scan-pay" class="primary-btn glow-effect mt-2" style="display: none;">Simulate Scan & Pay</button>
+            </div>
+        </div>
+
+        <!-- Existing Simulator -->
+        <div id="charging-screen" class="sub-view">
+            <div class="simulator-container">
+                <header>
+                    <h1 id="stationTitle">⚡ Station #42</h1>
+                    <p class="subtitle" style="margin-bottom: 5px;">📍 <span id="chargingStationAddress">Address</span> | <span id="chargingStationDistance">-- km</span></p>
+                    <p class="subtitle">Ready for connection <span id="chargingUserName" style="color: var(--primary-neon); font-weight: bold;"></span></p>
+                </header>
+
+                <div class="scenery-container glass-panel">
+                    <div class="scenery">
+                        <div class="charging-station">
+                            <div class="station-top"></div>
+                            <div class="station-body">
+                                <div class="station-screen"></div>
+                                <div class="station-glow"></div>
+                            </div>
+                        </div>
+                        
+                        <div class="car-container" id="carContainer">
+                            <div class="car">
+                                <div class="car-top"></div>
+                                <div class="car-body"></div>
+                                <div class="wheel left"></div>
+                                <div class="wheel right"></div>
+                            </div>
+                        </div>
+                        
+                        <div class="connection-cable" id="connectionCable">
+                            <div class="cable-line"></div>
+                            <div class="energy-flow" id="energyFlow">
+                                <div class="particle"></div>
+                                <div class="particle"></div>
+                                <div class="particle"></div>
+                            </div>
+                        </div>
+                        
+                        <div class="road"></div>
+                    </div>
+                </div>
+
+                <main class="dashboard">
+                    <div class="battery-section glass-panel">
+                        <div class="battery-wrapper">
+                            <div class="battery-body">
+                                <div class="battery-level" id="batteryLevel"></div>
+                                <div class="battery-text" id="batteryText">0%</div>
+                            </div>
+                            <div class="battery-cap"></div>
+                        </div>
+                    </div>
+
+                    <div class="stats-section glass-panel">
+                        <h2>Charging Stats</h2>
+                        <div class="stat-grid">
+                            <div class="stat-box">
+                                <span class="label">Power Delivered</span>
+                                <span class="value"><span id="powerDelivered">0.00</span> kWh</span>
+                            </div>
+                            <div class="stat-box">
+                                <span class="label">Current Cost</span>
+                                <span class="value cost-value">₹<span id="totalCost">0.00</span></span>
+                            </div>
+                            <div class="stat-box">
+                                <span class="label">Rate</span>
+                                <span class="value" id="chargingRateDisplay">₹15 / kWh</span>
+                            </div>
+                            <div class="stat-box">
+                                <span class="label">Time Remaining</span>
+                                <span class="value" id="timeRemaining">--:--</span>
+                            </div>
+                        </div>
+                    </div>
+
+                    <div class="controls-section glass-panel" id="mainControlsSection">
+                        <h2>Controls</h2>
+                        <div class="speed-selector">
+                            <button class="speed-btn active" data-speed="standard" data-multiplier="1">Standard</button>
+                            <button class="speed-btn" data-speed="fast" data-multiplier="2.5">Fast Charge</button>
+                            <button class="speed-btn" data-speed="ultra" data-multiplier="5">Ultra-Fast</button>
+                        </div>
+                        <div class="action-buttons">
+                            <button id="arriveBtn" class="primary-btn glow-effect">Park Vehicle</button>
+                            <button id="startBtn" class="primary-btn" disabled>Start Charging</button>
+                            <button id="stopBtn" class="secondary-btn" disabled>Stop</button>
+                            <button id="payNowBtn" class="primary-btn glow-effect" style="display: none;">Pay Now</button>
+                        </div>
+                    </div>
+
+                    <div id="finalPaymentSection" class="glass-panel" style="display: none; grid-column: 1 / -1; text-align: center;">
+                        <h2>Final Settlement</h2>
+                        <p id="finalPaymentText" style="font-size: 1.2rem; margin-bottom: 10px;"></p>
+                        <div class="qr-container" id="finalQrContainer" style="display: none; justify-content: center; margin: 10px 0;">
+                            <div class="qr-frame" id="finalQrFrame">
+                                <div class="qr-code"></div>
+                                <div class="laser-scanner"></div>
+                            </div>
+                        </div>
+                        <button id="finalPayBtn" class="primary-btn glow-effect" style="display: none; margin: 0 auto;">Scan to Pay Balance</button>
+                        <button id="finishBtn" class="primary-btn" style="display: none; margin: 0 auto;">Finish & Return Home</button>
+                    </div>
+                </main>
+            </div>
+        </div>
+    </div>
+<script src="{{ url_for('static', filename='script.js') }}"></script>
+</body>
+</html>
